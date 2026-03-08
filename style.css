@@ -49,35 +49,34 @@ body {
 .no-deco { text-decoration: none; font-size: 0.9rem; }
 .btn-open:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
 
-/* MAIN CONTENT WITH BG FOTO 2 */
-/* MAIN CONTENT WITH BG FOTO 2 */
+/* --- TAMPILAN UTAMA (FOKUS MOBILE) --- */
 .main-content {
-    /* Gunakan gradasi transparan agar teks tetap terbaca */
     background-image: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), 
                       url('foto8.jpeg');
     
-    /* PENTING: Jangan pakai 'fixed' di mobile */
-    background-attachment: scroll; 
+    /* Gunakan scroll agar tidak error di HP */
+    background-attachment: scroll !important; 
     
-    /* 'cover' akan memastikan seluruh layar tertutup foto */
-    background-size: cover;
+    /* AGAR PAS DI HP: Mengikuti lebar layar 100%, tinggi otomatis menyesuaikan */
+    background-size: 100% auto; 
     
-    /* Geser posisi foto agar wajah di atas tidak tertutup card putih */
-    /* Nilai 20% artinya kita fokus ke area atas foto */
-    background-position: center 20%; 
+    /* Fokuskan ke atas agar wajah tidak tertutup card */
+    background-position: center top; 
     
     background-repeat: no-repeat;
-    
-    /* Gunakan min-height agar konten tidak memotong background */
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    
+    /* Tambahkan warna dasar yang senada jika foto tidak menutup seluruh layar */
+    background-color: #ffffff; 
 }
 
-/* Kembalikan efek mewah 'fixed' HANYA untuk Laptop */
+/* --- TAMPILAN LAPTOP/DESKTOP --- */
 @media (min-width: 1024px) {
     .main-content {
-        background-attachment: fixed;
+        background-attachment: fixed !important;
+        background-size: cover; /* Di laptop lebih bagus cover */
         background-position: center;
     }
 }
@@ -292,10 +291,6 @@ body {
     background-color: #4a0404; /* Maroon sesuai permintaanmu */
 }
 
-/* Pastikan konten utama tidak tersembunyi */
-.main-content {
-    display: block !important; 
-}
 
 /* Jika ingin animasi yang lebih spesifik, bisa ditambahkan keyframes */
 /* Contoh: fade-in dan sedikit naik */
@@ -310,5 +305,6 @@ body {
 .signature { animation-delay: 0.5s; }
 
 */
+
 
 
