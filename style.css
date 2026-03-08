@@ -1,0 +1,289 @@
+:root {
+    --gold: #c5a059;
+    --white: #ffffff;
+    --dark: #2c2c2c;
+    --glass: rgba(255, 255, 255, 0.82);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+    font-family: 'Montserrat', sans-serif;
+    color: var(--dark);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+/* COVER */
+#cover {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100vh;
+    background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                url('cover.JPEG') center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgb(221, 129, 9);
+    z-index: 1000;
+    text-align: center;
+    transition: transform 1.2s cubic-bezier(0.7, 0, 0.3, 1);
+}
+
+#cover.open { transform: translateY(-100%); }
+
+#cover h1 { font-family: 'Great Vibes', cursive; font-size: 4.5rem; margin: 15px 0; }
+
+.btn-open {
+    padding: 14px 30px;
+    background: var(--gold);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+    margin-top: 15px;
+    display: inline-block;
+}
+
+.no-deco { text-decoration: none; font-size: 0.9rem; }
+.btn-open:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+
+/* MAIN CONTENT WITH BG FOTO 2 */
+.main-content {
+    background: linear-gradient(rgba(255,255,255,0.75), rgba(255,255,255,0.75)), 
+                url('foto8.jpeg') center/cover no-repeat fixed;
+    min-height: 100vh;
+}
+
+section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; text-align: center; }
+
+.glass-card {
+    background: var(--glass);
+    backdrop-filter: blur(8px);
+    padding: 40px;
+    border-radius: 25px;
+    border: 1px solid rgba(255,255,255,0.5);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    margin-bottom: 30px;
+}
+
+.section-title { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--gold); margin-bottom: 20px; }
+
+.couple-wrap { display: flex; gap: 20px; align-items: center; }
+.flex-1 { flex: 1; }
+
+.mempelai-img {
+    width: 150px; height: 150px;
+    border-radius: 50%;
+    border: 3px solid var(--gold);
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.name { font-family: 'Great Vibes', cursive; font-size: 2.8rem; color: var(--gold); }
+
+.divider-and { font-family: 'Great Vibes', cursive; font-size: 3rem; color: var(--gold); }
+
+/* ACARA DETAILS */
+.date-big { font-size: 4rem; color: var(--gold); margin: 5px 0; }
+.gold-line { width: 40%; margin: 20px auto; border: 0; border-top: 2px solid var(--gold); }
+
+/* MUSIC CONTROL */
+#music-control {
+    position: fixed; bottom: 25px; right: 25px;
+    width: 50px; height: 50px; background: var(--gold);
+    border-radius: 50%; display: flex; justify-content: center;
+    align-items: center; cursor: pointer; color: white;
+    z-index: 2000; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+footer { padding: 30px; text-align: center; font-size: 0.8rem; background: rgba(255,255,255,0.9); }
+
+@media (max-width: 768px) {
+    .couple-wrap { flex-direction: column; }
+    #cover h1 { font-size: 3.2rem; }
+}
+
+/* INFINITE AUTO SCROLL CSS */
+.infinite-slider {
+    width: 100%;
+    height: 250px;
+    margin: auto;
+    overflow: hidden;
+    position: relative;
+}
+
+.infinite-track {
+    display: flex;
+    width: calc(250px * 8); /* Lebar total: ukuran foto x jumlah foto */
+    animation: scroll 20s linear infinite; /* Kecepatan geser: 20 detik */
+}
+
+.infinite-track img {
+    width: 250px;
+    height: 250px;
+    object-fit: cover;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+/* Animasi Geser */
+@keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-250px * 4)); } /* Geser sejauh setengah jumlah foto */
+}
+
+/* Berhenti bergeser saat kursor diarahkan ke foto */
+.infinite-slider:hover .infinite-track {
+    animation-play-state: paused;
+}
+
+@media (max-width: 600px) {
+    .infinite-slider { height: 180px; }
+    .infinite-track img { width: 180px; height: 180px; }
+    @keyframes scroll {
+        100% { transform: translateX(calc(-180px * 4)); }
+    }
+}
+
+/* THANKS MESSAGE SECTION */
+#thanks-message {
+    padding-top: 50px; /* Sedikit space dari section sebelumnya */
+    padding-bottom: 50px;
+}
+
+.animated-thanks {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: var(--dark);
+    margin: 20px auto 30px;
+    max-width: 700px;
+    /* Animasi (akan dihandle oleh AOS) */
+}
+
+.signature {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3rem;
+    color: var(--gold);
+    margin-top: 20px;
+    /* Animasi (akan dihandle oleh AOS) */
+}
+
+.events-container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+/* Layout Berdampingan untuk Acara Kecil */
+.event-split {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.event-mini-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(197, 160, 89, 0.3);
+    border-radius: 15px;
+    padding: 15px;
+    flex: 1;
+    min-width: 250px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+/* Ikon Kalender Kecil */
+.calendar-icon {
+    background: var(--gold);
+    color: var(--white);
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+    min-width: 80px;
+}
+
+.day-number { font-size: 1.5rem; font-weight: bold; display: block; }
+.day-name, .month-year { font-size: 0.6rem; letter-spacing: 1px; }
+
+/* Tampilan Tanggal Utama (Resepsi) */
+.main-day-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin: 20px 0;
+}
+
+.main-day-display .line {
+    height: 2px;
+    width: 50px;
+    background: var(--gold);
+}
+
+.date-big {
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+}
+
+.day-text {
+    letter-spacing: 3px;
+    font-size: 0.9rem;
+    color: var(--gold);
+}
+
+.gold-line-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    width: 100%;
+}
+
+.btn-gold-outline {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 8px 25px;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    text-decoration: none;
+    border-radius: 20px;
+    transition: 0.3s;
+}
+
+.btn-gold-outline:hover {
+    background: var(--gold);
+    color: white;
+}
+
+html {
+    scroll-behavior: smooth; /* Agar transisi antar section tidak patah-patah */
+}
+
+body {
+    /* Pastikan TIDAK ada 'overflow: hidden' di sini setelah cover terbuka */
+    overflow-x: hidden; 
+    background-color: #4a0404; /* Maroon sesuai permintaanmu */
+}
+
+/* Pastikan konten utama tidak tersembunyi */
+.main-content {
+    display: block !important; 
+}
+
+/* Jika ingin animasi yang lebih spesifik, bisa ditambahkan keyframes */
+/* Contoh: fade-in dan sedikit naik */
+/*
+@keyframes thanksFadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.animated-thanks, .signature {
+    animation: thanksFadeIn 1.5s ease-out forwards;
+}
+.signature { animation-delay: 0.5s; }
+*/
