@@ -260,10 +260,6 @@ footer { padding: 30px; text-align: center; font-size: 0.8rem; background: rgba(
     color: white;
 }
 
-html {
-    scroll-behavior: smooth; /* Agar transisi antar section tidak patah-patah */
-}
-
 body {
     /* Pastikan TIDAK ada 'overflow: hidden' di sini setelah cover terbuka */
     overflow-x: hidden; 
@@ -286,4 +282,5 @@ body {
     animation: thanksFadeIn 1.5s ease-out forwards;
 }
 .signature { animation-delay: 0.5s; }
+
 */
