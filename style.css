@@ -51,9 +51,23 @@ body {
 
 /* MAIN CONTENT WITH BG FOTO 2 */
 .main-content {
+    /* Gunakan urutan yang lebih aman untuk mobile */
     background: linear-gradient(rgba(255,255,255,0.75), rgba(255,255,255,0.75)), 
-                url('foto8.jpeg') center/cover no-repeat fixed;
+                url('foto8.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    
+    /* Gunakan scroll untuk mobile agar gambar mengikuti alur halaman */
+    background-attachment: scroll; 
     min-height: 100vh;
+}
+
+/* Khusus untuk tampilan Laptop/Desktop, kita aktifkan lagi efek fixed-nya */
+@media (min-width: 1024px) {
+    .main-content {
+        background-attachment: fixed;
+    }
 }
 
 section { padding: 80px 20px; max-width: 1100px; margin: 0 auto; text-align: center; }
@@ -284,3 +298,4 @@ body {
 .signature { animation-delay: 0.5s; }
 
 */
+
