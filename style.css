@@ -50,23 +50,35 @@ body {
 .btn-open:hover { transform: scale(1.05); box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
 
 /* MAIN CONTENT WITH BG FOTO 2 */
+/* MAIN CONTENT WITH BG FOTO 2 */
 .main-content {
-    /* Gunakan urutan yang lebih aman untuk mobile */
-    background: linear-gradient(rgba(255,255,255,0.75), rgba(255,255,255,0.75)), 
-                url('foto8.jpeg');
+    /* Gunakan gradasi transparan agar teks tetap terbaca */
+    background-image: linear-gradient(rgba(255,255,255,0.7), rgba(255,255,255,0.7)), 
+                      url('foto8.jpeg');
+    
+    /* PENTING: Jangan pakai 'fixed' di mobile */
+    background-attachment: scroll; 
+    
+    /* 'cover' akan memastikan seluruh layar tertutup foto */
     background-size: cover;
-    background-position: center;
+    
+    /* Geser posisi foto agar wajah di atas tidak tertutup card putih */
+    /* Nilai 20% artinya kita fokus ke area atas foto */
+    background-position: center 20%; 
+    
     background-repeat: no-repeat;
     
-    /* Gunakan scroll untuk mobile agar gambar mengikuti alur halaman */
-    background-attachment: scroll; 
+    /* Gunakan min-height agar konten tidak memotong background */
     min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
-/* Khusus untuk tampilan Laptop/Desktop, kita aktifkan lagi efek fixed-nya */
+/* Kembalikan efek mewah 'fixed' HANYA untuk Laptop */
 @media (min-width: 1024px) {
     .main-content {
         background-attachment: fixed;
+        background-position: center;
     }
 }
 
@@ -298,4 +310,5 @@ body {
 .signature { animation-delay: 0.5s; }
 
 */
+
 
