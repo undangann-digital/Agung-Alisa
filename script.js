@@ -90,3 +90,26 @@ window.onload = function() {
     document.body.style.overflow = 'hidden';
     document.documentElement.style.overflow = 'hidden';
 };
+
+document.addEventListener('touchstart', function() {
+    startAutoScroll();
+}, { once: true }); // Hanya jalan sekali saat layar disentuh
+
+let scrollSpeed = 1; // Kecepatan pixel per frame
+let scrolling = true;
+
+function step() {
+  if (scrolling) {
+    window.scrollBy(0, scrollSpeed);
+    requestAnimationFrame(step);
+  }
+}
+
+// Jalankan otomatis
+requestAnimationFrame(step);
+
+// Opsional: Berhenti kalau user menyentuh layar (agar tidak melawan user)
+window.addEventListener('touchstart', () => scrolling = false);
+window.addEventListener('touchend', () => {
+  setTimeout(() => { scrolling = true; requestAnimationFrame(step); }, 2000);
+});
