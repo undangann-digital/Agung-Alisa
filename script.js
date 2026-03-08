@@ -1,29 +1,34 @@
-function bukaUndangan() {
-  document.getElementById("cover").style.display = "none";
-  document.getElementById("acara").classList.remove("hidden");
-}
-
 // 1. Inisialisasi Animasi AOS
 AOS.init({
     duration: 1200,
     once: true
 });
 
-// 2. Kontrol Musik dan Cover
 const music = document.getElementById('weddingMusic');
 const musicControl = document.getElementById('music-control');
+let isAutoScrolling = false;
 
+// 2. Fungsi Utama Buka Undangan (Satu fungsi untuk semua aksi)
 function startInvitation() {
-    // Hilangkan cover ke atas
-    document.getElementById('cover').classList.add('open');
+    const cover = document.getElementById('cover');
     
-    // Izinkan halaman di-scroll
+    // Efek Membuka Tirai ke Atas
+    cover.style.transform = 'translateY(-100%)';
+    cover.style.transition = '2s cubic-bezier(0.7, 0, 0.3, 1)';
+    
+    // Izinkan halaman di-scroll (Penting untuk browser HP)
     document.body.style.overflow = 'auto';
-    
-    // Putar musik
-    music.play().catch(error => {
-        console.log("Autoplay dicegah oleh browser, musik akan menyala saat interaksi berikutnya.");
-    });
+    document.documentElement.style.overflow = 'auto';
+
+    // Putar Musik
+    if (music) {
+        music.play().catch(e => console.log("Musik butuh interaksi user"));
+    }
+
+    // Trigger Scroll Otomatis setelah animasi cover hampir selesai
+    setTimeout(() => {
+        autoScrollLogic();
+    }, 1800); 
 }
 
 function toggleMusic() {
@@ -36,54 +41,20 @@ function toggleMusic() {
     }
 }
 
-// 3. Menangani Nama Tamu dari URL
-// Contoh penggunaan: index.html?to=Budi+Santoso
-const urlParams = new URLSearchParams(window.location.search);
-const guestName = urlParams.get('to');
-if (guestName) {
-    document.getElementById('guest-name').innerText = guestName;
-}
-
-// 4. Kunci Scroll saat halaman pertama kali dimuat
-window.onload = function() {
-    window.scrollTo(0, 0);
-    document.body.style.overflow = 'hidden';
-};
-
-let isAutoScrolling = false;
-
-function startInvitation() {
-    const cover = document.getElementById('cover');
-    const music = document.getElementById('weddingMusic');
-
-    // 1. Efek Membuka Tirai (Sesuai Referensi Video)
-    cover.style.transform = 'translateY(-100%)';
-    cover.style.transition = '2s cubic-bezier(0.7, 0, 0.3, 1)';
-
-    // 2. Putar Musik Ardhito
-    if (music) {
-        music.play().catch(e => console.log("Musik butuh interaksi user"));
-    }
-
-    // 3. Trigger Scroll Otomatis setelah animasi cover hampir selesai
-    setTimeout(() => {
-        autoScrollLogic();
-    }, 1500); 
-}
-
+// 3. Logika Auto Scroll (Optimasi Performa Mobile)
 function autoScrollLogic() {
     if (isAutoScrolling) return;
     isAutoScrolling = true;
 
-    const scrollSpeed = 0.8; // Ubah angka ini (0.5 - 2) untuk mengatur kecepatan
+    const scrollSpeed = 0.8; // Kecepatan pelan agar tetap mewah
     
     function step() {
         if (!isAutoScrolling) return;
 
         window.scrollBy(0, scrollSpeed);
 
-        // Berhenti jika sudah sampai di bagian Terimakasih/Footer
-        if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 2) {
+        // Berhenti jika sudah sampai di bagian bawah (Footer)
+        if ((window.innerHeight + window.pageYOffset) >= document.body.offsetHeight - 5) {
             isAutoScrolling = false;
             return;
         }
@@ -93,13 +64,29 @@ function autoScrollLogic() {
 
     requestAnimationFrame(step);
 
-    // Berhenti otomatis jika tamu menyentuh layar (User Experience tetap terjaga)
-    const stopScroll = () => {
-        isAutoScrolling = false;
-        window.removeEventListener('touchstart', stopScroll);
-        window.removeEventListener('wheel', stopScroll);
-    };
-
-    window.addEventListener('touchstart', stopScroll);
-    window.addEventListener('wheel', stopScroll);
+    // Berhenti jika user menyentuh layar (User Experience)
+    // Diberi jeda agar tidak langsung mati saat klik tombol buka
+    setTimeout(() => {
+        const stopScroll = () => {
+            isAutoScrolling = false;
+            window.removeEventListener('touchstart', stopScroll);
+            window.removeEventListener('wheel', stopScroll);
+        };
+        window.addEventListener('touchstart', stopScroll);
+        window.addEventListener('wheel', stopScroll);
+    }, 600);
 }
+
+// 4. Menangani Nama Tamu dari URL
+const urlParams = new URLSearchParams(window.location.search);
+const guestName = urlParams.get('to');
+if (guestName) {
+    document.getElementById('guest-name').innerText = guestName;
+}
+
+// 5. Kunci Scroll saat awal load (Agar user tidak scroll sebelum dibuka)
+window.onload = function() {
+    window.scrollTo(0, 0);
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+};
